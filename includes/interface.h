@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 16:31:21 2015 Jean-Baptiste Grégoire
-** Last update Tue Apr  7 16:36:42 2015 Jean-Baptiste Grégoire
+** Last update Tue Apr  7 16:58:12 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef INTERFACE_H_
@@ -32,10 +32,11 @@ enum		e_conversion
 typedef struct	s_iport
 {
   char		*ip;
-  char		iport[24];
   int		port;
   uint8_t	p1;
   uint8_t	p2;
+  char		iport[24];
+  char		padding[2];
 }		t_iport;
 
 int		inet__create_sock(int port, char *protocol, int domain,
