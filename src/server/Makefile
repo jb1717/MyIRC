@@ -5,7 +5,7 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:20 2015 Jean-Baptiste Grégoire
-## Last update Tue Apr  7 16:23:15 2015 Jean-Baptiste Grégoire
+## Last update Wed Apr  8 00:53:46 2015 Jean-Baptiste Grégoire
 ##
 
 DEBUG		= 	no
@@ -22,7 +22,7 @@ CC		=	gcc
 
 INCLUDES	=	includes/
 
-CFLAGS		=	-W -Wall -Wextra -I $(INCLUDES)
+CFLAGS		=	-W -Wall -Wextra -Wpadded -I $(INCLUDES)
 
 ifeq ($(DEBUG),yes)
 	CFLAGS 	+= -g3
