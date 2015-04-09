@@ -4,3 +4,15 @@
 - mise en place du la routine de login
 - mise en place des routine de communications
 - mise en place des routine de transfert de fichier
+
+*** CLIENT ***
+- Création des fonction :
+  	   - /server
+	   - /nick
+	   - /join
+	   - /part
+	   - /users
+	   - /msg
+	   - /send_file
+	   - /accept_file
+- mise en place du client graphique (GTK)
