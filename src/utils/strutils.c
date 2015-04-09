@@ -5,9 +5,11 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 16:37:45 2015 Jean-Baptiste Grégoire
-** Last update Tue Apr  7 16:37:48 2015 Jean-Baptiste Grégoire
+** Last update Wed Apr  8 21:52:48 2015 Jean-Baptiste Grégoire
 */
 
+#include <string.h>
+#include <stdlib.h>
 #include <stdlib.h>
 
 char	*strchr_n(char *str, char c, int n)
@@ -37,4 +39,19 @@ void	replace_all_occ(char *str, char c, char d)
 	str[i] = d;
       i++;
     }
+}
+
+char            *m_strcat(char *dest, char *src)
+{
+  char          *res;
+  int           len;
+
+  len = (dest ? strlen(dest) : 0) + (src ? strlen(src) : 0);
+  if ((res = realloc(dest, sizeof(char) * (len + 1))) == NULL)
+    return (NULL);
+  if (!dest)
+    strcpy(res, src);
+  else
+    res = strcat(res, src);
+  return (res);
 }

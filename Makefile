@@ -5,7 +5,7 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:05:55 2015 Jean-Baptiste Grégoire
-## Last update Tue Apr  7 16:19:15 2015 Jean-Baptiste Grégoire
+## Last update Wed Apr  8 23:49:06 2015 Jean-Baptiste Grégoire
 ##
 
 NAME	=	MyIRC
@@ -15,18 +15,24 @@ SERVER	=	src/server
 CLIENT	=	src/client
 
 $(NAME):
-	make --no-print-directory -C $(SERVER)
-	make --no-print-directory -C $(CLIENT)
+	make -C $(SERVER)
+	make -C $(CLIENT)
 
 all:	$(NAME)
 
+$(SERVER):
+	make -C $(SERVER)
+
+$(CLIENT):
+	make -C $(CLIENT)
+
 clean:
-	make --no-print-directory -C $(SERVER) clean
-	make --no-print-directory -C $(CLIENT) clean
+	make -C $(SERVER) clean
+	make -C $(CLIENT) clean
 
 fclean:	clean
-	make --no-print-directory -C $(SERVER) fclean
-	make --no-print-directory -C $(CLIENT) fclean
+	make -C $(SERVER) fclean
+	make -C $(CLIENT) fclean
 
 re:	fclean all
 

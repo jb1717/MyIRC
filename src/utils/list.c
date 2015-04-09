@@ -5,41 +5,66 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 01:36:07 2015 Jean-Baptiste Grégoire
-** Last update Wed Apr  8 01:45:17 2015 Jean-Baptiste Grégoire
+** Last update Wed Apr  8 16:11:13 2015 Jean-Baptiste Grégoire
 */
 
 #include "list.h"
 
-void		list__add(t_client **list, t_client *elem)
+t_list		*list__new(void *elem, size_t size)
 {
-  t_client	*it;
-  t_client	*save;
-  char		stop;
+  t_list	*new;
+
+  if ((new = malloc(sizeof(t_list))) == NULL)
+    return (NULL);
+  if ((new->data = malloc(size)) == NULL)
+    return (NULL);
+  memcpy(new->data, elem, size);
+  new->next = NULL;
+}
+
+void		list__push_back(t_list **list, void *elem, size_t size)
+{
+  t_list	*it;
+  t_list	*save;
 
   if (*list == NULL)
     {
-      elem->next = *list;
-      *list = elem;
+      *list = list__new(elem, size);
       return ;
     }
-  stop = 1;
   it = *list;
-  while (it && stop)
-    {
-      if (it->next && it->next->addr < elem->addr)
-  	it = it->next;
-      else
-  	stop = 0;
-    }
-  save = it->next;
-  it->next = elem;
-  elem->next = save;
+  while (it->next)
+    it = it->next;
+  it->next = list__new(elem, size);
 }
 
-void		list__delete(t_client **list, t_client *elem)
+void		*list__get_element(t_list *begin, int pos)
 {
-  t_client	*it;
-  t_client	*prev;
+  unsigned int	i;
+  t_list	*it;
+  size_t	len;
+
+  len = list__len(begin);
+  if (begin == NULL || len <= pos)
+    return (NULL);
+  if (pos < 0)
+    pos = len - pos;
+  if (pos < 0)
+    return (NULL);
+  i = 0;
+  it = begin;
+  while (i < pos && it)
+    {
+      it = it->next;
+      i++;
+    }
+  return (it->data);
+}
+
+void		list__delete(t_list **list, void *elem)
+{
+  t_list	*it;
+  t_list	*prev;
 
   if (!(*list))
     return ;
@@ -62,9 +87,9 @@ void		list__delete(t_client **list, t_client *elem)
     }
 }
 
-size_t		list__len(t_client *begin)
+size_t		list__len(t_list *begin)
 {
-  t_client	it;
+  t_list	it;
   size_t	i;
 
   it = begin;
