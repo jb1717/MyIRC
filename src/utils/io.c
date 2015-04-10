@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Mar 10 11:47:41 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 00:22:51 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 16:08:04 2015 Jean-Baptiste Grégoire
 */
 
 #include "utils.h"
@@ -66,21 +66,24 @@ int		write_data(int fd, char *data)
   return (0);
 }
 
-char		**parse_args(char *param, int nb_args)
+char		**parse_args(char *param, int nb_args, char *delim)
 {
   int           i;
   char          *tmp;
   char		**tab;
 
-  if ((tab = malloc(sizeof(char *) * nb_args)) == NULL)
+  if (nb_args == 0)
+    nb_args = strcocc(param, delim);
+  nb_args += 1;
+  if ((tab = malloc(sizeof(char *) * (nb_args + 1))) == NULL)
     return (NULL);
-  bzero(tab, sizeof(char *) * nb_args);
+  bzero(tab, sizeof(char *) * (nb_args + 1));
   i = 0;
-  tmp = strtok(param, " \t\r\n");
-  while (tmp && i < 2)
+  tmp = strtok(param, delim);
+  while (tmp && i < nb_args)
     {
       tab[i] = tmp;
-      tmp = strtok(NULL, " \t\r\n");
+      tmp = strtok(NULL, delim);
       i++;
     }
   return (tab);

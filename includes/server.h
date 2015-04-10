@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 02:41:41 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 15:14:36 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -24,8 +24,10 @@
 # include "interface.h"
 # include "list.h"
 # include "utils.h"
+# include "c_buffer.h"
 
 # define MAX_CONNEXION	100
+# define BUF_READ	2048
 # define MAX(a, b)	((a) > (b) ? (a) : (b))
 
 enum			e_state
@@ -50,6 +52,7 @@ typedef struct		s_client
   char			login[32];
   char			user[32];
   char			chan[32];
+  t_cbuffer		buf;
   struct s_client	*next;
 }			t_client;
 
@@ -82,5 +85,6 @@ int		cmp_elem__client(void *elem1, void *elem2);
 int		nick_func(t_server *s, t_client *client, char **param);
 int		user_func(t_server *s, t_client *client, char **param);
 int		quit_func(t_server *s, t_client *client, char **param);
+int		message_func(t_server *s, t_client *client, char **param);
 
 #endif /* !SERVER_H_ */

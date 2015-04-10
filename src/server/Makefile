@@ -5,10 +5,10 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:20 2015 Jean-Baptiste Grégoire
-## Last update Fri Apr 10 02:53:45 2015 Jean-Baptiste Grégoire
+## Last update Fri Apr 10 15:47:10 2015 Jean-Baptiste Grégoire
 ##
 
-DEBUG		= 	no
+DEBUG		= 	yes
 
 NAME		=	server
 
@@ -17,6 +17,7 @@ SRC		=	main.c			\
 			func_call.c		\
 			handle_event.c		\
 			quit.c			\
+			messages.c		\
 			../utils/c_buffer.c	\
 			../utils/io.c		\
 			../utils/list.c		\

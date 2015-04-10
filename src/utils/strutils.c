@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 16:37:45 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 00:21:43 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 12:55:51 2015 Jean-Baptiste Grégoire
 */
 
 #include "utils.h"
@@ -39,6 +39,31 @@ void	replace_all_occ(char *str, char c, char d)
     }
 }
 
+size_t		strcocc(char *str, char *accept)
+{
+  size_t	cx;
+  unsigned int	i;
+  unsigned int	j;
+
+  i = 0;
+  cx = 0;
+  while (str[i])
+    {
+      j = 0;
+      while (accept[j])
+	{
+	  if (rindex(str, accept[j]))
+	    {
+	      cx++;
+	      break ;
+	    }
+	  j++;
+	}
+      i++;
+    }
+  return (cx);
+}
+
 char            *m_strcat(char *dest, char *src)
 {
   char          *res;
@@ -52,4 +77,26 @@ char            *m_strcat(char *dest, char *src)
   else
     res = strcat(res, src);
   return (res);
+}
+
+int		is_in(char *str, char **tab, int flag)
+{
+  int		i;
+
+  i = 0;
+  while (tab[i])
+    {
+      if (flag == 0)
+	{
+	  if (strcmp(str, tab[i]) == 0)
+	    return (1);
+	}
+      else
+	{
+	  if (strcasecmp(str, tab[i]) == 0)
+	    return (1);
+	}
+      i++;
+    }
+  return (0);
 }
