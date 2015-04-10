@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 15:14:36 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 17:59:52 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -68,6 +68,7 @@ typedef struct	s_server
   fd_set	active_fd_write;
   t_list	*client_list;
   t_list	*chan_list;
+  char		*input;
   int		bfd;
   int		serv_sock;
 }		t_server;
