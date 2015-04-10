@@ -5,12 +5,10 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 16:37:45 2015 Jean-Baptiste Grégoire
-** Last update Wed Apr  8 21:52:48 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 00:21:43 2015 Jean-Baptiste Grégoire
 */
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdlib.h>
+#include "utils.h"
 
 char	*strchr_n(char *str, char c, int n)
 {

@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 01:36:07 2015 Jean-Baptiste Grégoire
-** Last update Wed Apr  8 16:11:13 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 02:59:45 2015 Jean-Baptiste Grégoire
 */
 
 #include "list.h"
@@ -20,12 +20,12 @@ t_list		*list__new(void *elem, size_t size)
     return (NULL);
   memcpy(new->data, elem, size);
   new->next = NULL;
+  return (new);
 }
 
 void		list__push_back(t_list **list, void *elem, size_t size)
 {
   t_list	*it;
-  t_list	*save;
 
   if (*list == NULL)
     {
@@ -40,12 +40,12 @@ void		list__push_back(t_list **list, void *elem, size_t size)
 
 void		*list__get_element(t_list *begin, int pos)
 {
-  unsigned int	i;
+  int		i;
   t_list	*it;
   size_t	len;
 
   len = list__len(begin);
-  if (begin == NULL || len <= pos)
+  if (begin == NULL || (int)len <= pos)
     return (NULL);
   if (pos < 0)
     pos = len - pos;
@@ -61,35 +61,38 @@ void		*list__get_element(t_list *begin, int pos)
   return (it->data);
 }
 
-void		list__delete(t_list **list, void *elem)
+void		*list__delete(t_list **list, void *elem,
+			     int (*cmp_func)(void *elem1, void *elem2))
 {
   t_list	*it;
   t_list	*prev;
 
   if (!(*list))
-    return ;
+    return (NULL);
   it = *list;
   prev = it;
   while (it)
     {
-      if (it == elem)
+      if ((cmp_func && cmp_func(it->data, elem)) ||
+	  (cmp_func == NULL && elem == it->data))
 	{
 	  if (prev != it)
 	    prev->next = prev->next->next;
 	  else
 	    *list = (*list)->next;
 	  it->next = NULL;
-	  return ;
+	  return (elem);
 	}
       if (it != *list)
 	prev = prev->next;
       it = it->next;
     }
+  return (NULL);
 }
 
 size_t		list__len(t_list *begin)
 {
-  t_list	it;
+  t_list	*it;
   size_t	i;
 
   it = begin;

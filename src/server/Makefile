@@ -5,14 +5,24 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:20 2015 Jean-Baptiste Grégoire
-## Last update Wed Apr  8 00:53:46 2015 Jean-Baptiste Grégoire
+## Last update Fri Apr 10 02:53:45 2015 Jean-Baptiste Grégoire
 ##
 
 DEBUG		= 	no
 
 NAME		=	server
 
-SRC		=	main.c
+SRC		=	main.c			\
+			auth.c			\
+			func_call.c		\
+			handle_event.c		\
+			quit.c			\
+			../utils/c_buffer.c	\
+			../utils/io.c		\
+			../utils/list.c		\
+			../utils/strutils.c	\
+			../utils/free.c		\
+			../interface/inet.c
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -20,9 +30,9 @@ RM		=	rm -f
 
 CC		=	gcc
 
-INCLUDES	=	includes/
+INCLUDES	=	../../includes/
 
-CFLAGS		=	-W -Wall -Wextra -Wpadded -I $(INCLUDES)
+CFLAGS		=	-W -Wall -Wextra -I $(INCLUDES)
 
 ifeq ($(DEBUG),yes)
 	CFLAGS 	+= -g3

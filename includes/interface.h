@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 16:31:21 2015 Jean-Baptiste Grégoire
-** Last update Tue Apr  7 16:58:12 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 01:26:55 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef INTERFACE_H_
@@ -20,6 +20,7 @@
 # include <sys/types.h>
 # include <limits.h>
 # include <errno.h>
+# include "utils.h"
 
 # define UNUSED(a)	__attribute__((unused))a
 # define BUF_SIZE	1024

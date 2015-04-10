@@ -5,11 +5,9 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Mar 10 11:47:41 2015 Jean-Baptiste Grégoire
-** Last update Wed Apr  8 23:45:10 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 00:22:51 2015 Jean-Baptiste Grégoire
 */
 
-#include <unistd.h>
-#include <string.h>
 #include "utils.h"
 
 static int	check()
@@ -68,17 +66,22 @@ int		write_data(int fd, char *data)
   return (0);
 }
 
-/* void            parse_args(char *param, char *tab[3]) */
-/* { */
-/*   int           i; */
-/*   char          *tmp; */
+char		**parse_args(char *param, int nb_args)
+{
+  int           i;
+  char          *tmp;
+  char		**tab;
 
-/*   i = 0; */
-/*   tmp = strtok(param, " \t\r\n"); */
-/*   while (tmp && i < 2) */
-/*     { */
-/*       tab[i] = tmp; */
-/*       tmp = strtok(NULL, " \t\r\n"); */
-/*       i++; */
-/*     } */
-/* } */
+  if ((tab = malloc(sizeof(char *) * nb_args)) == NULL)
+    return (NULL);
+  bzero(tab, sizeof(char *) * nb_args);
+  i = 0;
+  tmp = strtok(param, " \t\r\n");
+  while (tmp && i < 2)
+    {
+      tab[i] = tmp;
+      tmp = strtok(NULL, " \t\r\n");
+      i++;
+    }
+  return (tab);
+}

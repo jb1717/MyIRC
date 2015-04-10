@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Thu Apr  9 03:45:19 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 02:41:41 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -23,8 +23,10 @@
 # include <sys/ioctl.h>
 # include "interface.h"
 # include "list.h"
+# include "utils.h"
 
 # define MAX_CONNEXION	100
+# define MAX(a, b)	((a) > (b) ? (a) : (b))
 
 enum			e_state
   {
@@ -59,10 +61,26 @@ typedef struct		s_chan
 
 typedef struct	s_server
 {
-  unsigned int	bfd;
+  fd_set	active_fd_read;
+  fd_set	active_fd_write;
   t_list	*client_list;
   t_list	*chan_list;
+  int		bfd;
   int		serv_sock;
 }		t_server;
+
+typedef struct	s_func
+{
+  char		*name;
+  int		(*func)(t_server *s, t_client *client, char **param);
+  int		nb_args;
+}		t_func;
+
+int		call_func(t_server *s, t_client *client, char *input);
+int		handle_event(t_server *s, fd_set *rfds, fd_set *wfds);
+int		cmp_elem__client(void *elem1, void *elem2);
+int		nick_func(t_server *s, t_client *client, char **param);
+int		user_func(t_server *s, t_client *client, char **param);
+int		quit_func(t_server *s, t_client *client, char **param);
 
 #endif /* !SERVER_H_ */
