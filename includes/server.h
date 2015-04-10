@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 17:59:52 2015 Jean-Baptiste Grégoire
+** Last update Fri Apr 10 22:25:13 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -80,6 +80,12 @@ typedef struct	s_func
   int		nb_args;
 }		t_func;
 
+typedef struct	s_rpl
+{
+  uint16_t	n;
+  char		*msg;
+}		t_rpl;
+
 int		call_func(t_server *s, t_client *client, char *input);
 int		handle_event(t_server *s, fd_set *rfds, fd_set *wfds);
 int		cmp_elem__client(void *elem1, void *elem2);
@@ -87,5 +93,7 @@ int		nick_func(t_server *s, t_client *client, char **param);
 int		user_func(t_server *s, t_client *client, char **param);
 int		quit_func(t_server *s, t_client *client, char **param);
 int		message_func(t_server *s, t_client *client, char **param);
+void		send_rpl(t_client *dest, int n, ...);
+void		send_message(t_client *dest, char *message);
 
 #endif /* !SERVER_H_ */

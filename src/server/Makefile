@@ -5,7 +5,7 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:20 2015 Jean-Baptiste Grégoire
-## Last update Fri Apr 10 15:47:10 2015 Jean-Baptiste Grégoire
+## Last update Fri Apr 10 22:06:03 2015 Jean-Baptiste Grégoire
 ##
 
 DEBUG		= 	yes
@@ -18,6 +18,7 @@ SRC		=	main.c			\
 			handle_event.c		\
 			quit.c			\
 			messages.c		\
+			replies.c		\
 			../utils/c_buffer.c	\
 			../utils/io.c		\
 			../utils/list.c		\
