@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 22:20:34 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 18:26:09 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 23:27:57 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -17,6 +17,8 @@ t_func const		*get_func_tab()
 				 {"users", &users_func, 0},
 				 {"privmsg", &message_func, 2},
 				 {"list", &list_func, 1},
+				 {"join", &join_func, 1},
+				 {"part", &part_func, 1},
 				 {"quit", &quit_func, 0},
 				 {NULL, NULL, 0}};
 

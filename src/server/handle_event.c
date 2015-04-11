@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 15:55:45 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 21:46:01 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 00:24:09 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -15,7 +15,10 @@ void		get_input(t_server *s, t_client *client)
   char		*input;
 
   if ((input = read_input(client->fd)) == NULL)
-    return ;
+    {
+      quit_func(s, client, NULL);
+      return ;
+    }
   call_func(s, client, input);
 }
 
