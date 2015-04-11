@@ -5,33 +5,53 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:25 2015 Jean-Baptiste Grégoire
-## Last update Tue Apr  7 16:23:27 2015 Jean-Baptiste Grégoire
+## Last update Sat Apr 11 02:18:33 2015 Hugo Prenat
 ##
 
-DEBUG		= 	no
+DEBUG		= 	yes
 
 NAME		=	client
 
-SRC		=	main.c
+SRC		=	src/main.c		\
+			src/init.c		\
+			src/network.c		\
+			src/first_cmd.c		\
+			../utils/strutils.c	\
+			../interface/inet.c
+
+OBJDIR		=	obj/
 
 OBJ		=	$(SRC:.c=.o)
+#$(patsubst %.c, $(OBJDIR)%.o, $(SRC))
 
 RM		=	rm -f
 
 CC		=	gcc
 
-INCLUDES	=	includes/
+GTKCFLAGS	=	$(shell pkg-config --cflags gtk+-3.0)
 
-CFLAGS		=	-W -Wall -Wextra -I $(INCLUDES)
+INCLUDES	=	-Iincludes/
+
+INCLUDES	+=	-I../../includes/
+
+CFLAGS		=	-W -Wall -Wextra $(INCLUDES) $(GTKCFLAGS)
+
+LDFLAGS		=	$(shell pkg-config --libs gtk+-3.0)
 
 ifeq ($(DEBUG),yes)
-	CFLAGS 	+= -g3
+
+CFLAGS 		+= 	-g3
+
 else
-	CFLAGS	+= -O3
+
+CFLAGS		+= 	-O3
+
 endif
 
+FIRST		:=	$(shell test -d $(OBJDIR) || mkdir $(OBJDIR))
+
 $(NAME):	$(OBJ)
-		$(CC) -o $(NAME) $(OBJ)
+		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 all:		$(NAME)
 
