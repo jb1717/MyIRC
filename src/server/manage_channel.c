@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Sat Apr 11 22:03:02 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 00:30:42 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 01:28:47 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -55,6 +55,7 @@ static void	remove_link_from_client(t_client *client, t_chan *chan)
       ch = it->data;
       if (strcmp(ch->name, chan->name) == 0)
 	{
+
 	  if (prev != it)
 	    prev->next = prev->next->next;
 	  else
@@ -80,7 +81,7 @@ int		part_func(t_server *s, t_client *client, char **param)
       if (strcmp(param[1], ch->name) == 0)
 	{
 	  remove_link_from_chan(ch, client);
-	  remove_link_from_client(client, ch);
+	  list__delete(&(client->chan_list), ch, NULL);
 	}
       if (list__len(ch->client_list) == 0)
 	{
