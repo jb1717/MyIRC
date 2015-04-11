@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Sat Apr 11 22:03:02 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 01:28:47 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 01:56:12 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -33,33 +33,6 @@ static void	remove_link_from_chan(t_chan *chan, t_client *client)
 	    prev->next = prev->next->next;
 	  else
 	    chan->client_list = chan->client_list->next;
-	  it->next = NULL;
-	  return ;
-	}
-      if (it != chan->client_list)
-	prev = prev->next;
-      it = it->next;
-    }
-}
-
-static void	remove_link_from_client(t_client *client, t_chan *chan)
-{
-  t_list	*it;
-  t_list	*prev;
-  t_chan	*ch;
-
-  it = client->chan_list;
-  prev = it;
-  while (it)
-    {
-      ch = it->data;
-      if (strcmp(ch->name, chan->name) == 0)
-	{
-
-	  if (prev != it)
-	    prev->next = prev->next->next;
-	  else
-	    client->chan_list = client->chan_list->next;
 	  it->next = NULL;
 	  return ;
 	}

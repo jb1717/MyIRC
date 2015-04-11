@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 09:21:17 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 02:35:45 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 01:59:27 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -47,7 +47,7 @@ void		try_client(t_server *s, t_list *begin,
       if (is_in(cl->login, dests, 0))
 	{
 	  if (param[2])
-	    send_message(cl, s->input + (param[2] - param[0]));
+	    send_message(cl, s->input);
 	}
       it = it->next;
     }
@@ -73,7 +73,7 @@ void		try_chan(t_server *s, t_list *begin,
 	      while (it_cl)
 		{
 		  cl = it_cl->data;
-		  send_message(cl, s->input + (param[2] - param[0]));
+		  send_message(cl, s->input);
 		  it_cl = it_cl->next;
 		}
 	    }
@@ -82,12 +82,21 @@ void		try_chan(t_server *s, t_list *begin,
     }
 }
 
-int		message_func(t_server *s, UNUSED(t_client *client), char **param)
+int		message_func(t_server *s, t_client *client, char **param)
 {
   char		**dests;
+  char		*header;
 
   if ((dests = parse_args(param[1], 0, ",")) == NULL)
     return (-1);
+  header = strdup(":");
+  header = m_strcat(header, client->login);
+  header = m_strcat(header, " PRIVMSG ");
+  header = m_strcat(header, param[1]);
+  header = m_strcat(header, " :");
+  header = m_strcat(header, s->input + (param[2] - param[0]));
+  free(s->input);
+  s->input = header;
   try_client(s, s->client_list, dests, param);
   try_chan(s, s->chan_list, dests, param);
   return (0);
