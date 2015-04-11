@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Wed Apr  8 16:43:56 2015 Hugo Prenat
-** Last update Sat Apr 11 02:19:23 2015 Hugo Prenat
+** Last update Sat Apr 11 03:04:23 2015 Hugo Prenat
 */
 
 #ifndef CLIENT_H
@@ -66,5 +66,10 @@ int		connect_to_serv(const gchar *);
 
 void		find_cmd(t_client *, char *);
 void		nick_cmd(t_client *, char *);
+void		user_cmd(t_client *, char *);
+void		list_cmd(t_client *, char *);
+void		join_cmd(t_client *, char *);
+void		part_cmd(t_client *, char *);
+void		users_cmd(t_client *, char *);
 
 #endif /* !CLIENT_H */

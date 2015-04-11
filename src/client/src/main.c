@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Tue Apr  7 18:34:02 2015 Hugo Prenat
-** Last update Sat Apr 11 02:33:20 2015 Hugo Prenat
+** Last update Sat Apr 11 03:05:24 2015 Hugo Prenat
 */
 
 #include "client.h"
@@ -26,7 +26,9 @@ void		find_cmd(t_client *client, char *line)
 {
   int		i;
   char		good;
-  static t_func	cmd[] = {{"/nick", &nick_cmd},
+  static t_func	cmd[] = {{"/nick", &nick_cmd}, {"/list", &list_cmd},
+			 {"/user", &user_cmd}, {"/join", &join_cmd},
+			 {"/part", &part_cmd}, {"/users", &users_cmd},
 			 {NULL, NULL}};
 
   i = 0;
