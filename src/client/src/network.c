@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Sat Apr 11 00:33:56 2015 Hugo Prenat
-** Last update Sat Apr 11 02:38:09 2015 Hugo Prenat
+** Last update Sat Apr 11 02:52:59 2015 Hugo Prenat
 */
 
 #include "client.h"
@@ -43,12 +43,16 @@ int	connect_to_serv(const gchar *line)
 
   pos = 0;
   port = 6667;
+  ip = strdup(&line[8]);
   while (line[pos] && line[pos] != ':')
     pos++;
   if (line[pos] == ':' && (size_t)(pos + 1) != strlen(line))
-    port = atoi(&line[pos + 1]);
-  ip = (char *)&line[8];
+    {
+      port = atoi(&line[pos + 1]);
+      ip[pos - 8] = '\0';
+    }
   fd = inet__get_sock(ip, port, "TCP", AF_INET);
+  free(ip);
   return (fd);
 }
 
