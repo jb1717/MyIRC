@@ -6,7 +6,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 23:30:03 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 18:00:45 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 01:59:18 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -34,8 +34,8 @@ void		display_clients(t_list *clients)
   while (it)
     {
       client = it->data;
-      printf("fd = %d // login = %s // user = %s // channel = %s\n",
-	     client->fd, client->login, client->user, client->chan);
+      printf("fd = %d // login = %s // user = %s\n",
+	     client->fd, client->login, client->user);
       it = it->next;
     }
   printf("*** FIN ***\n");
@@ -55,6 +55,7 @@ int		serv_loop(t_server *s)
   while (err != -1)
     {
       readfds = s->active_fd_read;
+      writefds = s->active_fd_write;
       timeout.tv_sec = 120;
       timeout.tv_usec = 0;
       err = select(s->bfd + 1, &readfds, &writefds, NULL, &timeout);

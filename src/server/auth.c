@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 03:33:32 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 22:36:37 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 03:25:53 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -38,5 +38,28 @@ int		user_func(t_server *s, t_client *client, char **param)
   else
     send_rpl(client, 395, "The MSN server");
   send_rpl(client, 394, "The MSN server");
+  return (0);
+}
+
+int		list_func(t_server *s, t_client *client, char **param)
+{
+  t_list	*it;
+  t_chan	*ch;
+
+  it = s->chan_list;
+  send_rpl(client, 321, "The MSN server", client->user);
+  while (it)
+    {
+      ch = it->data;
+      if (param[1])
+	{
+	  if (strstr(ch->name, param[1]))
+	    send_rpl(client, 322, "The MSN server", ch->name);
+	}
+      else
+	send_rpl(client, 322, "The MSN server", ch->name);
+      it = it->next;
+    }
+  send_rpl(client, 323, "The MSN server");
   return (0);
 }

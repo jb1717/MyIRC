@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 20:35:28 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 22:25:30 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 03:18:10 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -17,6 +17,9 @@ t_rpl const		*get_rpl_tab()
 				 {393, RPL_USERS},
 				 {394, RPL_ENDOFUSERS},
 				 {395, RPL_NOUSERS},
+				 {321, RPL_LISTSTART},
+				 {322, RPL_LIST},
+				 {323, RPL_LISTEND},
 				 {0, NULL}};
 
   return (tab);

@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 22:25:13 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 03:24:10 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -51,7 +51,7 @@ typedef struct		s_client
   t_right		perms;
   char			login[32];
   char			user[32];
-  char			chan[32];
+  t_list		*chan_list;
   t_cbuffer		buf;
   struct s_client	*next;
 }			t_client;
@@ -59,7 +59,7 @@ typedef struct		s_client
 typedef struct		s_chan
 {
   char			name[32];
-  t_client		*client_list;
+  t_list		*client_list;
 }			t_chan;
 
 typedef struct	s_server
@@ -93,6 +93,7 @@ int		nick_func(t_server *s, t_client *client, char **param);
 int		user_func(t_server *s, t_client *client, char **param);
 int		quit_func(t_server *s, t_client *client, char **param);
 int		message_func(t_server *s, t_client *client, char **param);
+int		list_func(t_server *s, t_client *client, char **param);
 void		send_rpl(t_client *dest, int n, ...);
 void		send_message(t_client *dest, char *message);
 
