@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 01:36:07 2015 Jean-Baptiste Grégoire
-** Last update Fri Apr 10 02:59:45 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 21:42:47 2015 Jean-Baptiste Grégoire
 */
 
 #include "list.h"
@@ -23,19 +23,24 @@ t_list		*list__new(void *elem, size_t size)
   return (new);
 }
 
-void		list__push_back(t_list **list, void *elem, size_t size)
+void		list__push_back(t_list **list, void *elem)
 {
   t_list	*it;
+  t_list	*new;
 
+  if ((new = malloc(sizeof(t_list))) == NULL)
+    return ;
+  new->data = elem;
+  new->next = NULL;
   if (*list == NULL)
     {
-      *list = list__new(elem, size);
+      *list = new;
       return ;
     }
   it = *list;
   while (it->next)
     it = it->next;
-  it->next = list__new(elem, size);
+  it->next = new;
 }
 
 void		*list__get_element(t_list *begin, int pos)

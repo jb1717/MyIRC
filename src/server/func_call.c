@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 22:20:34 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 03:23:32 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 18:26:09 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -14,6 +14,7 @@ t_func const		*get_func_tab()
 {
   static const t_func	tab[] = {{"nick", &nick_func, 2},
 				 {"user", &user_func, 4},
+				 {"users", &users_func, 0},
 				 {"privmsg", &message_func, 2},
 				 {"list", &list_func, 1},
 				 {"quit", &quit_func, 0},
@@ -32,7 +33,9 @@ int			call_func(t_server *s, t_client *client, char *input)
   func_tab = get_func_tab(1);
   while (func_tab[i].name)
     {
-      if (strncasecmp(func_tab[i].name, input, strlen(func_tab[i].name)) == 0)
+      if (strncasecmp(func_tab[i].name, input, strlen(func_tab[i].name)) == 0
+	  && (input[strlen(func_tab[i].name)] == ' ' ||
+	      input[strlen(func_tab[i].name)] == '\0'))
 	{
 	  s->input = strdup(input);
 	  params = parse_args(input, func_tab[i].nb_args, " \t\r\n");

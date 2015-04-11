@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 03:24:10 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 18:25:24 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -94,6 +94,7 @@ int		user_func(t_server *s, t_client *client, char **param);
 int		quit_func(t_server *s, t_client *client, char **param);
 int		message_func(t_server *s, t_client *client, char **param);
 int		list_func(t_server *s, t_client *client, char **param);
+int		users_func(t_server *s, t_client *client, char **param);
 void		send_rpl(t_client *dest, int n, ...);
 void		send_message(t_client *dest, char *message);
 

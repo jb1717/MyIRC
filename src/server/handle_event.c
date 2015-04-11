@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 15:55:45 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 03:53:05 2015 Jean-Baptiste Grégoire
+** Last update Sat Apr 11 21:46:01 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -42,9 +42,9 @@ void		add_new_chan(t_server *s, char *name, t_client *client)
   bzero(new, sizeof(t_chan));
   strncpy(new->name, name,
 	  (strlen(name) < 32 ? strlen(name) : 31));
-  list__push_back(&(new->client_list), client, sizeof(t_client));
-  list__push_back(&(s->chan_list), new, sizeof(t_chan));
-  list__push_back(&(client->chan_list), new, sizeof(t_chan));
+  list__push_back(&(new->client_list), client);
+  list__push_back(&(s->chan_list), new);
+  list__push_back(&(client->chan_list), new);
 }
 
 void		add_client_to_chan(t_server *s, t_client *client, char *name)
@@ -58,8 +58,8 @@ void		add_client_to_chan(t_server *s, t_client *client, char *name)
       ch = it->data;
       if (strcmp(name, ch->name) == 0)
 	{
-	  list__push_back(&(ch->client_list), client, sizeof(t_client));
-	  list__push_back(&(client->chan_list), ch, sizeof(t_chan));
+	  list__push_back(&(ch->client_list), client);
+	  list__push_back(&(client->chan_list), ch);
 	  return ;
 	}
       it = it->next;
@@ -80,10 +80,10 @@ void		add_new_client(t_server *s)
   new->perms = USER;
   new->next = NULL;
   FD_SET(new->fd, &(s->active_fd_read));
-  list__push_back(&(s->client_list), new, sizeof(t_client));
   s->bfd = MAX(s->bfd, new->fd);
   cbuffer__init(&(new->buf));
   add_client_to_chan(s, new, "#General");
+  list__push_back(&(s->client_list), new);
 }
 
 int		handle_event(t_server *s, fd_set *rfds, fd_set *wfds)
