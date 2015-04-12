@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Sat Apr 11 18:20:39 2015 Hugo Prenat
-** Last update Sun Apr 12 01:57:59 2015 Hugo Prenat
+** Last update Sun Apr 12 16:54:57 2015 Hugo Prenat
 */
 
 #include "client.h"
@@ -60,6 +60,9 @@ void	remove_chan(t_client *client, char *old_chan)
 	}
       i++;
     }
+  client->chan[j] = NULL;
+  client->messages[j] = NULL;
+  i = 0;
 }
 
 int	get_chan(t_client *client, char *chan)

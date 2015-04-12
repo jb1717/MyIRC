@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Tue Apr  7 18:34:02 2015 Hugo Prenat
-** Last update Sun Apr 12 02:05:52 2015 Hugo Prenat
+** Last update Sun Apr 12 22:11:59 2015 Hugo Prenat
 */
 
 #include "client.h"
@@ -13,11 +13,17 @@
 void	unknowncmd(t_client *client, char *line)
 {
   char	*buff;
+  int	size_buff;
+  int	cur_chan;
 
-  if ((buff = malloc(sizeof(*buff) * (strlen(line) + 11))) == NULL)
+  if (line[0] == '/')
+    return ;
+  cur_chan = gtk_notebook_get_current_page(GTK_NOTEBOOK(client->notebook));
+  size_buff = (strlen(line) + 12 + strlen(client->chan[cur_chan]));
+  if ((buff = malloc(sizeof(*buff) * size_buff)) == NULL)
     return ;
   memset(buff, 0, strlen(line) + 11);
-  sprintf(buff, "PRIVMSG %s\r\n", line);
+  sprintf(buff, "PRIVMSG %s %s\r\n", client->chan[cur_chan], line);
   send(client->fd, buff, strlen(buff), MSG_DONTWAIT);
   free(buff);
 }
@@ -27,9 +33,9 @@ void		find_cmd(t_client *client, char *line)
   int		i;
   char		good;
   static t_func	cmd[] = {{"/nick", &nick_cmd}, {"/list", &list_cmd},
-			 {"/user", &user_cmd}, {"/join", &join_cmd},
-			 {"/part", &part_cmd}, {"/users", &users_cmd},
-			 {"/msg", &msg_cmd},
+			 {"/join", &join_cmd}, {"/part", &part_cmd},
+			 {"/msg", &msg_cmd}, {"/send_file", &send_cmd},
+			 {"/accept_file", &recv_cmd}, {"/users", &users_cmd},
 			 {NULL, NULL}};
 
   i = 0;

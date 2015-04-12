@@ -5,30 +5,58 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Sat Apr 11 00:33:56 2015 Hugo Prenat
-** Last update Sun Apr 12 04:21:01 2015 Hugo Prenat
+** Last update Sun Apr 12 23:36:34 2015 Hugo Prenat
 */
 
 #include "client.h"
 
-void	check_content(t_client *client, char *buff, int ret)
+void	put_output_on_screen(t_client *client, char *chan,
+			     char *str, char *msg)
 {
   int	i;
 
   i = 0;
-  buff[ret - 1] = '\n';
-  buff[ret] = '\0';
-  if ((i = get_chan(client, "General")) != -1)
+  if ((i = get_chan(client, chan)) != -1)
     {
-      put_text_in_entry(client->messages[i], buff, ret - 1);
-      put_text_in_entry(client->messages[i], "\n", 1);
+      put_text_in_entry(client->messages[i], str, strlen(str));
+      put_text_in_entry(client->messages[i], msg, strlen(msg) - 3);
     }
+  else
+    {
+      if (known_command(chan) == 0)
+	{
+	  put_text_in_entry(client->messages[0], str, strlen(str));
+	  put_text_in_entry(client->messages[0], msg, strlen(msg));
+	}
+    }
+}
+
+void	check_content(t_client *client, char *buff)
+{
+  char	*str;
+  char	*msg;
+  char	*nick;
+  char	*chan;
+
+  if (strcocc(buff, ":") < 1)
+    return ;
+  msg = get_msg_from_msg(buff);
+  if ((nick = get_nick_from_msg(buff)) == NULL)
+    nick = strdup("server");
+  if ((str = malloc(sizeof(*str) * (strlen(nick) + 4))) == NULL)
+    return ;
+  memset(str, 0, strlen(nick) + 4);
+  sprintf(str, "<%s> ", nick);
+  chan = get_chan_from_msg(buff);
+  put_output_on_screen(client, chan, str, msg);
+  free(nick);
+  free(str);
 }
 
 gboolean		check_socket(t_client *client)
 {
   fd_set		readfds;
   struct timeval	timeout;
-  int			ret;
   char			buff[BUFF_SIZE + 1];
 
   if (client->fd == -1)
@@ -41,8 +69,12 @@ gboolean		check_socket(t_client *client)
   if (select(client->fd + 1, &readfds, NULL, NULL, &timeout) != -1)
     if (FD_ISSET(client->fd, &readfds))
       {
-	ret = read(client->fd, buff, BUFF_SIZE);
-	check_content(client, buff, ret);
+	if (read(client->fd, buff, BUFF_SIZE) <= 0)
+	  {
+	    disconnect_client(client);
+	    return (TRUE);
+	  }
+	check_content(client, buff);
       }
   return (TRUE);
 }
@@ -54,6 +86,8 @@ int	connect_to_serv(t_client *client, const gchar *line)
   int	port;
   int	pos;
 
+  if (client->fd != -1)
+    disconnect_client(client);
   pos = 0;
   port = 6667;
   ip = strdup(&line[8]);
@@ -65,7 +99,7 @@ int	connect_to_serv(t_client *client, const gchar *line)
       ip[pos - 8] = '\0';
     }
   if ((fd = inet__get_sock(ip, port, "TCP", AF_INET)) != -1)
-    put_text_in_entry(client->messages[0], "Connected to server \n", 21);
+    put_text_in_entry(client->messages[0], "Connected to server\n", 20);
   free(ip);
   return (fd);
 }
@@ -81,6 +115,7 @@ void		write_sock(GtkWidget *entry, gpointer ptr)
     return ;
   if (client->fd == -1 && strncmp("/server", line, 7) != 0)
     {
+      put_text_in_entry(client->messages[0], "Not connected to server\n", 24);
       gtk_entry_set_text(GTK_ENTRY(entry), "");
       return ;
     }

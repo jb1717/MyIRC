@@ -5,10 +5,10 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:25 2015 Jean-Baptiste Grégoire
-## Last update Sun Apr 12 04:38:53 2015 Hugo Prenat
+## Last update Sun Apr 12 23:36:49 2015 Hugo Prenat
 ##
 
-DEBUG		= 	yes
+DEBUG		= 	no
 
 NAME		=	client
 

@@ -3,12 +3,5 @@
 
 *** CLIENT ***
 - Création des fonction :
-  	   - /server
-	   - /nick
-	   - /join
-	   - /part
-	   - /users
-	   - /msg
 	   - /send_file
 	   - /accept_file
-- mise en place du client graphique (GTK)

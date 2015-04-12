@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Sun Apr 12 03:47:35 2015 Hugo Prenat
-** Last update Sun Apr 12 04:04:00 2015 Hugo Prenat
+** Last update Sun Apr 12 23:24:08 2015 Hugo Prenat
 */
 
 #include "client.h"
@@ -35,4 +35,45 @@ void		add_msgbox(t_client *client, GtkWidget *new)
   client->messages[i] = new;
   client->messages[++i] = NULL;
   free(tmp);
+}
+
+int	is_log(t_client *client)
+{
+  if (client->nick == NULL)
+    {
+      put_text_in_entry(client->messages[0], "You are not logged\n", 19);
+      return (-1);
+    }
+  return (0);
+}
+
+int		known_command(char *cmd)
+{
+  static char	*cmds[] = {"NICK", "JOIN", "USERS", "PRIVMSG", "LIST", "PART",
+			   NULL};
+  int		i;
+
+  i = 0;
+  while (cmds[i] != NULL)
+    {
+      if (strcmp(cmds[i], cmd) == 0)
+	return (1);
+      i++;
+    }
+  return (0);
+}
+
+void	disconnect_client(t_client *client)
+{
+  int	nbr_pages;
+
+  nbr_pages = gtk_notebook_get_n_pages(GTK_NOTEBOOK(client->notebook));
+  while (nbr_pages > 1)
+    {
+      remove_chan(client, client->chan[nbr_pages - 1]);
+      nbr_pages--;
+    }
+  put_text_in_entry(client->messages[0], "Disconnected from server\n", 25);
+  close(client->fd);
+  client->fd = -1;
 }

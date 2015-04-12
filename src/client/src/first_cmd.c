@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Sat Apr 11 01:55:42 2015 Hugo Prenat
-** Last update Sun Apr 12 03:27:55 2015 Hugo Prenat
+** Last update Sun Apr 12 21:20:40 2015 Hugo Prenat
 */
 
 #include "client.h"
@@ -20,24 +20,16 @@ void	nick_cmd(t_client *client, char *line)
   sprintf(buff, "NICK %s\r\n", &line[6]);
   send(client->fd, buff, strlen(buff), MSG_DONTWAIT);
   free(buff);
-}
-
-void	user_cmd(t_client *client, char *line)
-{
-  char	*buff;
-
-  if ((buff = malloc(sizeof(*buff) * (strlen(line) + 3))) == NULL)
-    return ;
-  memset(buff, 0, strlen(line) + 3);
-  sprintf(buff, "USER %s\r\n", &line[6]);
-  send(client->fd, buff, strlen(buff), MSG_DONTWAIT);
-  free(buff);
+  free(client->nick);
+  client->nick = strdup(&line[6]);
 }
 
 void	join_cmd(t_client *client, char *line)
 {
   char	*buff;
 
+  if (is_log(client) == -1)
+    return ;
   if ((buff = malloc(sizeof(*buff) * (strlen(line) + 3))) == NULL)
     return ;
   memset(buff, 0, strlen(line) + 3);
@@ -52,6 +44,8 @@ void	part_cmd(t_client *client, char *line)
 {
   char	*buff;
 
+  if (is_log(client) == -1)
+    return ;
   if ((buff = malloc(sizeof(*buff) * (strlen(line) + 3))) == NULL)
     return ;
   memset(buff, 0, strlen(line) + 3);
@@ -65,6 +59,8 @@ void	msg_cmd(t_client *client, char *line)
 {
   char	*buff;
 
+  if (is_log(client) == -1)
+    return ;
   if ((buff = malloc(sizeof(*buff) * (strlen(line) + 7))) == NULL)
     return ;
   memset(buff, 0, strlen(line) + 7);
