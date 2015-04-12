@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 09:21:17 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 01:59:27 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 02:18:53 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -85,18 +85,18 @@ void		try_chan(t_server *s, t_list *begin,
 int		message_func(t_server *s, t_client *client, char **param)
 {
   char		**dests;
-  char		*header;
+  char		*tmp;
+  char		*new;
 
   if ((dests = parse_args(param[1], 0, ",")) == NULL)
     return (-1);
-  header = strdup(":");
-  header = m_strcat(header, client->login);
-  header = m_strcat(header, " PRIVMSG ");
-  header = m_strcat(header, param[1]);
-  header = m_strcat(header, " :");
-  header = m_strcat(header, s->input + (param[2] - param[0]));
+  if ((tmp = calloc(sizeof(char), 1024)) == NULL)
+    return (-1);
+  snprintf(tmp, 1023, ":%s PRIVMSG %s :%s\r\n", client->login, param[1], s->input + (param[2] - param[0]));
+  if ((new = realloc(tmp, strlen(tmp) + 1)) == NULL)
+    new = tmp;
   free(s->input);
-  s->input = header;
+  s->input = new;
   try_client(s, s->client_list, dests, param);
   try_chan(s, s->chan_list, dests, param);
   return (0);
