@@ -5,14 +5,14 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:05:55 2015 Jean-Baptiste Grégoire
-## Last update Sun Apr 12 04:44:59 2015 Hugo Prenat
+## Last update Sun Apr 12 04:49:21 2015 Hugo Prenat
 ##
 
 NAME	=	MyIRC
 
-BIN1	= 	client
+BIN1	= 	server
 
-BIN2	= 	server
+BIN2	= 	client
 
 SERVER	=	src/server/
 
