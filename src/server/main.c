@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 23:30:03 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 14:36:08 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 23:27:05 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -21,23 +21,6 @@ int		serv_init(t_server *s, int port)
   s->bfd = s->serv_sock;
   s->input = NULL;
   return (0);
-}
-
-void		display_clients(t_list *clients)
-{
-  t_list	*it;
-  t_client	*client;
-
-  it = clients;
-  printf("LIST DES CLIENTS\n");
-  while (it)
-    {
-      client = it->data;
-      printf("fd = %d / login = %s / user = %s\n",
-	     client->fd, client->login, client->user);
-      it = it->next;
-    }
-  printf("*** FIN ***\n");
 }
 
 int		serv_loop(t_server *s)
@@ -61,7 +44,6 @@ int		serv_loop(t_server *s)
 	return (-1);
       if (handle_event(s, &readfds, &writefds) == -1)
 	err = 1;
-      display_clients(s->client_list);
     }
   return (-1);
 }

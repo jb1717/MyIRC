@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 20:56:27 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 15:08:03 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 23:19:15 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef REPLIES_H_
@@ -20,7 +20,7 @@
 /*
 ** USERS
 */
-# define RPL_USERSTART	":irc.myirc.org 392 %s :%s %s"
+# define RPL_USERSTART	":irc.myirc.org 392 %s :Users:"
 # define RPL_USERS	":irc.myirc.org 393 %s :%s"
 # define RPL_ENDOFUSERS	":irc.myirc.org 394 %s :End of users"
 # define RPL_NOUSERS	":irc.myirc.org 395 %s :Nobody logged in"
@@ -28,14 +28,14 @@
 /*
 ** LIST
 */
-# define RPL_LISTSTART	":irc.myirc.org 321 %s :Channel: %s"
+# define RPL_LISTSTART	":irc.myirc.org 321 %s :Channel:"
 # define RPL_LIST	":irc.myirc.org 322 %s :%s"
 # define RPL_LISTEND	":irc.myirc.org 323 %s :End of /LIST"
 
 /*
 ** JOIN
 */
-# define RPL_NAMREPLY	":irc.myirc.org 353 %s :"
+# define RPL_NAMREPLY	":irc.myirc.org 353 %s"
 # define RPL_ENDOFNAMES	":irc.myirc.org 366 %s :End of /NAMES list"
 # define RPL_TOPIC	":irc.myirc.org 332 %s :%s"
 
