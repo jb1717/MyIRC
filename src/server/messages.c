@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 09:21:17 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 02:18:53 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 13:10:08 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -92,7 +92,8 @@ int		message_func(t_server *s, t_client *client, char **param)
     return (-1);
   if ((tmp = calloc(sizeof(char), 1024)) == NULL)
     return (-1);
-  snprintf(tmp, 1023, ":%s PRIVMSG %s :%s\r\n", client->login, param[1], s->input + (param[2] - param[0]));
+  snprintf(tmp, 1023, ":%s PRIVMSG %s :%s\r\n", client->login, param[1],
+	   s->input + (param[2] - param[0]));
   if ((new = realloc(tmp, strlen(tmp) + 1)) == NULL)
     new = tmp;
   free(s->input);

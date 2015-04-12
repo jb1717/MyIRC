@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Sat Apr 11 22:03:02 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 01:56:12 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 13:08:52 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -13,7 +13,42 @@
 int		join_func(t_server *s, t_client *client, char **param)
 {
   add_client_to_chan(s, client, param[1]);
+  send_rpl(client, 1, client->login, "JOIN", param[1]);
   return (0);
+}
+
+void		add_new_chan(t_server *s, char *name, t_client *client)
+{
+  t_chan	*new;
+
+  if ((new = malloc(sizeof(t_chan))) == NULL)
+    return ;
+  bzero(new, sizeof(t_chan));
+  strncpy(new->name, name,
+	  (strlen(name) < 32 ? strlen(name) : 31));
+  list__push_back(&(new->client_list), client);
+  list__push_back(&(s->chan_list), new);
+  list__push_back(&(client->chan_list), new);
+}
+
+void		add_client_to_chan(t_server *s, t_client *client, char *name)
+{
+  t_list	*it;
+  t_chan	*ch;
+
+  it = s->chan_list;
+  while (it)
+    {
+      ch = it->data;
+      if (strcmp(name, ch->name) == 0)
+	{
+	  list__push_back(&(ch->client_list), client);
+	  list__push_back(&(client->chan_list), ch);
+	  return ;
+	}
+      it = it->next;
+    }
+  add_new_chan(s, name, client);
 }
 
 static void	remove_link_from_chan(t_chan *chan, t_client *client)
@@ -59,9 +94,11 @@ int		part_func(t_server *s, t_client *client, char **param)
       if (list__len(ch->client_list) == 0)
 	{
 	  list__delete(&(s->chan_list), ch, NULL);
+	  send_rpl(client, 1, client->login, "PART", param[1]);
 	  return (0);
 	}
       it_chan = it_chan->next;
     }
+  send_rpl(client, 1, client->login, "PART", param[1]);
   return (0);
 }

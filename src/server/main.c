@@ -1,4 +1,3 @@
-
 /*
 ** main.c for MyIRC in /home/jibb/rendu/PSU_2014_myirc/src/server
 **
@@ -6,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 23:30:03 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 01:59:18 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 13:10:34 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -34,7 +33,7 @@ void		display_clients(t_list *clients)
   while (it)
     {
       client = it->data;
-      printf("fd = %d // login = %s // user = %s\n",
+      printf("fd = %d / login = %s / user = %s\n",
 	     client->fd, client->login, client->user);
       it = it->next;
     }

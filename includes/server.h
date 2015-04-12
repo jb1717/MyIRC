@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 23:29:18 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 12:08:52 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -97,8 +97,10 @@ int		list_func(t_server *s, t_client *client, char **param);
 int		users_func(t_server *s, t_client *client, char **param);
 int		join_func(t_server *s, t_client *client, char **param);
 int		part_func(t_server *s, t_client *client, char **param);
+int		is_logged(t_client *client);
 void		send_rpl(t_client *dest, int n, ...);
 void		send_message(t_client *dest, char *message);
 void		add_client_to_chan(t_server *s, t_client *client, char *name);
+void		welcome_msg(t_client *client);
 
 #endif /* !SERVER_H_ */

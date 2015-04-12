@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 15:55:45 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 00:24:09 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 13:08:46 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -34,40 +34,6 @@ void		set_output(t_client *client)
   if (sent < BUF_READ)
     cbuffer__put_back(&(client->buf), (char *)((size_t)tmp + sent),
 		      BUF_READ - sent);
-}
-
-void		add_new_chan(t_server *s, char *name, t_client *client)
-{
-  t_chan	*new;
-
-  if ((new = malloc(sizeof(t_chan))) == NULL)
-    return ;
-  bzero(new, sizeof(t_chan));
-  strncpy(new->name, name,
-	  (strlen(name) < 32 ? strlen(name) : 31));
-  list__push_back(&(new->client_list), client);
-  list__push_back(&(s->chan_list), new);
-  list__push_back(&(client->chan_list), new);
-}
-
-void		add_client_to_chan(t_server *s, t_client *client, char *name)
-{
-  t_list	*it;
-  t_chan	*ch;
-
-  it = s->chan_list;
-  while (it)
-    {
-      ch = it->data;
-      if (strcmp(name, ch->name) == 0)
-	{
-	  list__push_back(&(ch->client_list), client);
-	  list__push_back(&(client->chan_list), ch);
-	  return ;
-	}
-      it = it->next;
-    }
-  add_new_chan(s, name, client);
 }
 
 void		add_new_client(t_server *s)
@@ -101,9 +67,9 @@ int		handle_event(t_server *s, fd_set *rfds, fd_set *wfds)
     {
       client = it->data;
       if (FD_ISSET(client->fd, wfds))
-	set_output(client); // write
+	set_output(client);
       if (FD_ISSET(client->fd, rfds))
-	get_input(s, client); // read
+	get_input(s, client);
       it = it->next;
     }
   return (0);

@@ -5,17 +5,28 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 03:33:32 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 19:16:58 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 13:07:20 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
+
+int		is_logged(t_client *client)
+{
+  if (strlen(client->login) == 0 || strlen(client->user) == 0)
+    return (0);
+  return (1);
+}
 
 int		nick_func(UNUSED(t_server *s), t_client *client, char **param)
 {
   if (param[1] == NULL)
     return (-1);
+  if (strlen(client->login) > 0)
+    send_rpl(client, 1, client->login, "NICK", param[1]);
   strncpy(client->login, param[1],
 	  (strlen(param[1]) < 32 ? strlen(param[1]) : 31));
+  if (is_logged(client))
+    welcome_msg(client);
   return (0);
 }
 
@@ -23,8 +34,15 @@ int		user_func(UNUSED(t_server *s), t_client *client, char **param)
 {
   if (param[1] == NULL)
     return (-1);
+  if (is_logged(client))
+    {
+      send_rpl(client, 462);
+      return (0);
+    }
   strncpy(client->user, param[1],
 	  (strlen(param[1]) < 32 ? strlen(param[1]) : 31));
+  if (is_logged(client))
+    welcome_msg(client);
   return (0);
 }
 
@@ -51,7 +69,8 @@ int		list_func(t_server *s, t_client *client, char **param)
   return (0);
 }
 
-int		users_func(UNUSED(t_server *s), t_client *client, UNUSED(char **param))
+int		users_func(UNUSED(t_server *s), t_client *client,
+			   UNUSED(char **param))
 {
   t_list	*it;
   t_list	*it_cl;
@@ -67,8 +86,6 @@ int		users_func(UNUSED(t_server *s), t_client *client, UNUSED(char **param))
       while (it_cl)
 	{
 	  cl = it_cl->data;
-	  printf("-- %d --\n", cl->fd);
-	  printf("++ %s ++\n", cl->login);
 	  send_rpl(client, 393, "The MSN server", cl->login);
 	  it_cl = it_cl->next;
 	}

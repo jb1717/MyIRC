@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 22:20:34 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 23:27:57 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 13:07:36 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -25,6 +25,17 @@ t_func const		*get_func_tab()
   return (tab);
 }
 
+int			check_logged(t_client *client, char *input)
+{
+  if (!is_logged(client) && strncasecmp("nick", input, 4) != 0 &&
+      (strncasecmp("user", input, 4) != 0 || input[4] == 's'))
+    {
+      send_rpl(client, 451);
+      return (-1);
+    }
+  return (0);
+}
+
 int			call_func(t_server *s, t_client *client, char *input)
 {
   int			i;
@@ -32,17 +43,19 @@ int			call_func(t_server *s, t_client *client, char *input)
   char			**params;
 
   i = 0;
-  func_tab = get_func_tab(1);
+  func_tab = get_func_tab();
   while (func_tab[i].name)
     {
       if (strncasecmp(func_tab[i].name, input, strlen(func_tab[i].name)) == 0
 	  && (input[strlen(func_tab[i].name)] == ' ' ||
 	      input[strlen(func_tab[i].name)] == '\0'))
 	{
+	  if (check_logged(client, input) ==  -1)
+	    return (0);
 	  s->input = strdup(input);
 	  params = parse_args(input, func_tab[i].nb_args, " \t\r\n");
 	  func_tab[i].func(s, client, params);
-	  free(input); //look the way you get input !
+	  free(input);
 	  free(s->input);
 	  s->input = NULL;
 	  break ;

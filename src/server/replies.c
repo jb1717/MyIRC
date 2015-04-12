@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 20:35:28 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 03:18:10 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 11:58:36 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -20,6 +20,14 @@ t_rpl const		*get_rpl_tab()
 				 {321, RPL_LISTSTART},
 				 {322, RPL_LIST},
 				 {323, RPL_LISTEND},
+				 {353, RPL_NAMREPLY},
+				 {366, RPL_ENDOFNAMES},
+				 {462, ERR_ALREADYREG},
+				 {451, ERR_NOTREG},
+				 {1, RPL_GEN_CMD},
+				 {11, RPL_INFO_1},
+				 {12, RPL_INFO_2},
+				 {13, RPL_INFO_3},
 				 {0, NULL}};
 
   return (tab);
