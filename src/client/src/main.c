@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Tue Apr  7 18:34:02 2015 Hugo Prenat
-** Last update Sat Apr 11 03:05:24 2015 Hugo Prenat
+** Last update Sun Apr 12 02:05:52 2015 Hugo Prenat
 */
 
 #include "client.h"
@@ -14,11 +14,11 @@ void	unknowncmd(t_client *client, char *line)
 {
   char	*buff;
 
-  if ((buff = malloc(sizeof(*buff) * (strlen(line) + 3))) == NULL)
+  if ((buff = malloc(sizeof(*buff) * (strlen(line) + 11))) == NULL)
     return ;
-  memset(buff, 0, strlen(line) + 3);
-  sprintf(buff, "%s\r\n", line);
-  send(client->fd, buff, strlen(buff), MSG_DONTROUTE);
+  memset(buff, 0, strlen(line) + 11);
+  sprintf(buff, "PRIVMSG %s\r\n", line);
+  send(client->fd, buff, strlen(buff), MSG_DONTWAIT);
   free(buff);
 }
 
@@ -29,6 +29,7 @@ void		find_cmd(t_client *client, char *line)
   static t_func	cmd[] = {{"/nick", &nick_cmd}, {"/list", &list_cmd},
 			 {"/user", &user_cmd}, {"/join", &join_cmd},
 			 {"/part", &part_cmd}, {"/users", &users_cmd},
+			 {"/msg", &msg_cmd},
 			 {NULL, NULL}};
 
   i = 0;
@@ -56,7 +57,7 @@ void		put_text_in_entry(GtkWidget *box, char *str, int size)
   gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(text_buffer), &it);
   gtk_text_buffer_insert(text_buffer, &it, str, size);
   gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(text_buffer), &it);
-  gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(box), &it, 0.f, FALSE, 0, 0);
+  gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(box), &it, 0.0, FALSE, 0, 0);
 }
 
 int		main(int argc, char **argv)
@@ -67,5 +68,7 @@ int		main(int argc, char **argv)
   init("Client", 550, 500, &client);
   gtk_widget_show_all(client.window);
   gtk_main();
+  if (client.fd != -1)
+    close(client.fd);
   return (0);
 }

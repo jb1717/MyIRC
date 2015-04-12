@@ -5,10 +5,24 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Sat Apr 11 00:33:56 2015 Hugo Prenat
-** Last update Sat Apr 11 02:52:59 2015 Hugo Prenat
+** Last update Sun Apr 12 04:21:01 2015 Hugo Prenat
 */
 
 #include "client.h"
+
+void	check_content(t_client *client, char *buff, int ret)
+{
+  int	i;
+
+  i = 0;
+  buff[ret - 1] = '\n';
+  buff[ret] = '\0';
+  if ((i = get_chan(client, "General")) != -1)
+    {
+      put_text_in_entry(client->messages[i], buff, ret - 1);
+      put_text_in_entry(client->messages[i], "\n", 1);
+    }
+}
 
 gboolean		check_socket(t_client *client)
 {
@@ -28,13 +42,12 @@ gboolean		check_socket(t_client *client)
     if (FD_ISSET(client->fd, &readfds))
       {
 	ret = read(client->fd, buff, BUFF_SIZE);
-	put_text_in_entry(client->messages, buff, ret - 2);
-	put_text_in_entry(client->messages, "\n", 1);
+	check_content(client, buff, ret);
       }
   return (TRUE);
 }
 
-int	connect_to_serv(const gchar *line)
+int	connect_to_serv(t_client *client, const gchar *line)
 {
   int	fd;
   char	*ip;
@@ -51,7 +64,8 @@ int	connect_to_serv(const gchar *line)
       port = atoi(&line[pos + 1]);
       ip[pos - 8] = '\0';
     }
-  fd = inet__get_sock(ip, port, "TCP", AF_INET);
+  if ((fd = inet__get_sock(ip, port, "TCP", AF_INET)) != -1)
+    put_text_in_entry(client->messages[0], "Connected to server \n", 21);
   free(ip);
   return (fd);
 }
@@ -71,7 +85,7 @@ void		write_sock(GtkWidget *entry, gpointer ptr)
       return ;
     }
   else if (strncmp("/server", line, 7) == 0)
-    client->fd = connect_to_serv(line);
+    client->fd = connect_to_serv(client, line);
   else
     find_cmd(client, (char *)line);
   gtk_entry_set_text(GTK_ENTRY(entry), "");

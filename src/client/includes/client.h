@@ -5,7 +5,7 @@
 ** Login   <prenat_h@epitech.eu>
 **
 ** Started on  Wed Apr  8 16:43:56 2015 Hugo Prenat
-** Last update Sat Apr 11 03:04:23 2015 Hugo Prenat
+** Last update Sun Apr 12 04:37:58 2015 Hugo Prenat
 */
 
 #ifndef CLIENT_H
@@ -24,9 +24,11 @@ typedef struct	s_client
 {
   int		fd;
   GtkWidget	*window;
+  GtkWidget	*notebook;
   GtkWidget	*entry;
-  GtkWidget	*messages;
   GtkWidget	*list_user;
+  GtkWidget	**messages;
+  char		**chan;
 }		t_client;
 
 typedef struct	s_func
@@ -41,7 +43,7 @@ typedef struct	s_func
 
 void		init(char *, int, int, t_client *);
 void		create_list(GtkWidget *, t_client *);
-void		create_msg(GtkWidget *, t_client *);
+void		create_msg(t_client *, char *);
 void		create_entry(GtkWidget *, t_client *);
 void		create_interface(t_client *);
 
@@ -58,7 +60,15 @@ void		put_text_in_entry(GtkWidget *, char *, int);
 
 gboolean	check_socket(t_client *);
 int		inet__get_sock(char *, int, char *, int);
-int		connect_to_serv(const gchar *);
+int		connect_to_serv(t_client *, const gchar *);
+
+/*
+** Chan functions
+*/
+
+void		add_chan(t_client *, char *);
+void		remove_chan(t_client *, char *);
+int		get_chan(t_client *, char *);
 
 /*
 ** Client cmd
@@ -71,5 +81,18 @@ void		list_cmd(t_client *, char *);
 void		join_cmd(t_client *, char *);
 void		part_cmd(t_client *, char *);
 void		users_cmd(t_client *, char *);
+void		msg_cmd(t_client *, char *);
+
+/*
+** Parse functions
+*/
+
+char		*get_nick_from_msg(char *);
+
+/*
+** Utils
+*/
+
+void		add_msgbox(t_client *, GtkWidget *);
 
 #endif /* !CLIENT_H */

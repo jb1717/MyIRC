@@ -5,7 +5,7 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:25 2015 Jean-Baptiste Grégoire
-## Last update Sat Apr 11 02:18:33 2015 Hugo Prenat
+## Last update Sun Apr 12 04:38:53 2015 Hugo Prenat
 ##
 
 DEBUG		= 	yes
@@ -16,6 +16,10 @@ SRC		=	src/main.c		\
 			src/init.c		\
 			src/network.c		\
 			src/first_cmd.c		\
+			src/list_cmd.c		\
+			src/parse_cmd.c		\
+			src/chan.c		\
+			src/utils.c		\
 			../utils/strutils.c	\
 			../interface/inet.c
 
