@@ -5,10 +5,8 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:05:55 2015 Jean-Baptiste Grégoire
-## Last update Sun Apr 12 04:49:21 2015 Hugo Prenat
+## Last update Sun Apr 12 15:15:46 2015 Jean-Baptiste Grégoire
 ##
-
-NAME	=	MyIRC
 
 BIN1	= 	server
 
@@ -22,13 +20,11 @@ LINK	= 	ln -fs
 
 RM	= 	rm -f
 
-$(NAME):
+all:
 	make -C $(SERVER)
 	$(LINK) $(SERVER)$(BIN1) $(BIN1)
 	make -C $(CLIENT)
 	$(LINK) $(CLIENT)$(BIN2) $(BIN2)
-
-all:	$(NAME)
 
 server:
 	make -C $(SERVER)
