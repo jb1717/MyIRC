@@ -5,13 +5,15 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Sat Apr 11 22:03:02 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 13:08:52 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 14:27:10 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
 
 int		join_func(t_server *s, t_client *client, char **param)
 {
+  if (param[1] == NULL)
+    return (0);
   add_client_to_chan(s, client, param[1]);
   send_rpl(client, 1, client->login, "JOIN", param[1]);
   return (0);
@@ -82,6 +84,8 @@ int		part_func(t_server *s, t_client *client, char **param)
   t_list	*it_chan;
   t_chan	*ch;
 
+  if (param[1] == NULL)
+    return (0);
   it_chan = client->chan_list;
   while (it_chan)
     {

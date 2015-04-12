@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 16:37:45 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 00:34:57 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 14:25:00 2015 Jean-Baptiste Grégoire
 */
 
 #include "utils.h"
@@ -47,6 +47,8 @@ size_t		strcocc(char *str, char *accept)
 
   i = 0;
   cx = 0;
+  if (!str)
+    return (0);
   while (str[i])
     {
       j = 0;

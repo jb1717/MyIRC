@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Tue Apr  7 23:30:03 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 13:10:34 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 14:36:08 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -47,19 +47,20 @@ int		serv_loop(t_server *s)
   fd_set	writefds;
   t_timeval	timeout;
 
-  err = 1;
+  err = 0;
   FD_SET(s->serv_sock, &(s->active_fd_read));
   FD_ZERO(&readfds);
   FD_ZERO(&writefds);
-  while (err != -1)
+  while (!err)
     {
       readfds = s->active_fd_read;
       writefds = s->active_fd_write;
       timeout.tv_sec = 120;
       timeout.tv_usec = 0;
-      err = select(s->bfd + 1, &readfds, &writefds, NULL, &timeout);
+      if (select(s->bfd + 1, &readfds, &writefds, NULL, &timeout) == -1)
+	return (-1);
       if (handle_event(s, &readfds, &writefds) == -1)
-	err = -1;
+	err = 1;
       display_clients(s->client_list);
     }
   return (-1);

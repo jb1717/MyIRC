@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 00:02:55 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 12:08:52 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 14:50:36 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef SERVER_H_
@@ -51,6 +51,7 @@ typedef struct		s_client
   t_right		perms;
   char			login[32];
   char			user[32];
+  char			terminalID[32];
   t_list		*chan_list;
   t_cbuffer		buf;
   struct s_client	*next;

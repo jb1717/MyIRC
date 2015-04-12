@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 20:56:27 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 13:05:20 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 15:08:03 2015 Jean-Baptiste Grégoire
 */
 
 #ifndef REPLIES_H_
@@ -49,5 +49,7 @@
 on the version 0.1"
 # define RPL_INFO_3	":irc.myirc.org 003 %s USERS :are supported by \
 this server"
+# define ERR_NICKCOLLI	":irc.myirc.org 436 %s :Ignored. Nickname collision, \
+please choose another one"
 
 #endif /* !REPLIES_H_ */

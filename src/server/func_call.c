@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 22:20:34 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 13:07:36 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 14:44:17 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -52,10 +52,10 @@ int			call_func(t_server *s, t_client *client, char *input)
 	{
 	  if (check_logged(client, input) ==  -1)
 	    return (0);
-	  s->input = strdup(input);
+	  if ((s->input = strdup(input)) == NULL)
+	    return (-1);
 	  params = parse_args(input, func_tab[i].nb_args, " \t\r\n");
 	  func_tab[i].func(s, client, params);
-	  free(input);
 	  free(s->input);
 	  s->input = NULL;
 	  break ;

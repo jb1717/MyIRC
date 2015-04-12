@@ -5,21 +5,33 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Wed Apr  8 15:55:45 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 13:08:46 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 14:38:57 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
 
-void		get_input(t_server *s, t_client *client)
+int		get_input(t_server *s, t_client *client)
 {
   char		*input;
+  char		**tab;
+  int		i;
 
+  i = 0;
   if ((input = read_input(client->fd)) == NULL)
     {
       quit_func(s, client, NULL);
-      return ;
+      return (0);
     }
-  call_func(s, client, input);
+  if ((tab = parse_args(input, 0, "\n")) == NULL)
+    return (0);
+  while (tab[i])
+    {
+      if (call_func(s, client, tab[i]) == -1)
+	return (-1);
+      i++;
+    }
+  free(input);
+  return (0);
 }
 
 void		set_output(t_client *client)
