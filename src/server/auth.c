@@ -5,14 +5,14 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 03:33:32 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 15:08:28 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 23:22:15 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
 
 int		is_logged(t_client *client)
 {
-  if (strlen(client->login) == 0 || strlen(client->user) == 0)
+  if (strlen(client->login) == 0)
     return (0);
   return (1);
 }
@@ -37,10 +37,11 @@ int		nick_func(t_server *s, t_client *client, char **param)
     }
   if (strlen(client->login) > 0)
     send_rpl(client, 1, client->login, "NICK", param[1]);
+  else
+    welcome_msg(client);
+  bzero(client->login, 32);
   strncpy(client->login, param[1],
 	  (strlen(param[1]) < 32 ? strlen(param[1]) : 31));
-  if (is_logged(client))
-    welcome_msg(client);
   return (0);
 }
 
@@ -48,7 +49,7 @@ int		user_func(UNUSED(t_server *s), t_client *client, char **param)
 {
   if (param[1] == NULL)
     return (-1);
-  if (is_logged(client))
+  if (strlen(client->user))
     {
       send_rpl(client, 462);
       return (0);
@@ -69,7 +70,7 @@ int		list_func(t_server *s, t_client *client, char **param)
   t_chan	*ch;
 
   it = s->chan_list;
-  send_rpl(client, 321, "The MSN server", client->user);
+  send_rpl(client, 321, "The MSN server");
   while (it)
     {
       ch = it->data;
@@ -95,7 +96,7 @@ int		users_func(UNUSED(t_server *s), t_client *client,
   t_client	*cl;
 
   it = client->chan_list;
-  send_rpl(client, 392, "The MSN server", client->user, client->terminalID);
+  send_rpl(client, 392, "The MSN server");
   while (it)
     {
       ch = it->data;

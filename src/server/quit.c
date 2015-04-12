@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Fri Apr 10 02:25:12 2015 Jean-Baptiste Grégoire
-** Last update Sat Apr 11 02:37:34 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 23:26:49 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -30,7 +30,6 @@ int		quit_func(t_server *s, t_client *client, UNUSED(char **param))
 {
   t_client	*del;
 
-  printf("je veux quitter: %d %s\n", client->fd, client->login);
   if ((del = list__delete(&(s->client_list), client, NULL)) == NULL)
     return (0);
   leave_all_chanel(s, del);

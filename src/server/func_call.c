@@ -5,7 +5,7 @@
 ** Login   <jibb@epitech.net>
 **
 ** Started on  Thu Apr  9 22:20:34 2015 Jean-Baptiste Grégoire
-** Last update Sun Apr 12 14:44:17 2015 Jean-Baptiste Grégoire
+** Last update Sun Apr 12 22:31:45 2015 Jean-Baptiste Grégoire
 */
 
 #include "server.h"
@@ -13,7 +13,7 @@
 t_func const		*get_func_tab()
 {
   static const t_func	tab[] = {{"nick", &nick_func, 2},
-				 {"user", &user_func, 4},
+				 {"user ", &user_func, 4},
 				 {"users", &users_func, 0},
 				 {"privmsg", &message_func, 2},
 				 {"list", &list_func, 1},
@@ -46,9 +46,7 @@ int			call_func(t_server *s, t_client *client, char *input)
   func_tab = get_func_tab();
   while (func_tab[i].name)
     {
-      if (strncasecmp(func_tab[i].name, input, strlen(func_tab[i].name)) == 0
-	  && (input[strlen(func_tab[i].name)] == ' ' ||
-	      input[strlen(func_tab[i].name)] == '\0'))
+      if (strncasecmp(func_tab[i].name, input, strlen(func_tab[i].name)) == 0)
 	{
 	  if (check_logged(client, input) ==  -1)
 	    return (0);

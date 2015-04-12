@@ -5,10 +5,10 @@
 ## Login   <jibb@epitech.net>
 ##
 ## Started on  Tue Apr  7 16:20:20 2015 Jean-Baptiste Grégoire
-## Last update Sun Apr 12 11:43:08 2015 Jean-Baptiste Grégoire
+## Last update Sun Apr 12 23:28:45 2015 Jean-Baptiste Grégoire
 ##
 
-DEBUG		= 	yes
+DEBUG		= 	no
 
 NAME		=	server
 
